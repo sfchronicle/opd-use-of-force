@@ -64,6 +64,8 @@ INSTALLED_APPS = (
     'compressor',
     'bakery',
     'django_extensions',
+    'debug_toolbar',
+    'djgeojson',
 
     # Project Apps
     'lib',

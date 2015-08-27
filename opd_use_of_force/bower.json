@@ -3,6 +3,12 @@
   "private": true,
   "dependencies": {
     "jquery": "~1.11.1",
-    "modernizr": "~2.8.2"
+    "modernizr": "~2.8.2",
+    "foundation": "~5.5.2",
+    "d3": "~3.5.6",
+    "d3-plugins": "*"
+  },
+  "resolutions": {
+    "jquery": "~1.11.1"
   }
 }

@@ -8,11 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="opd_use_of_force">
-    <meta property="og:image" content="http://media.apps.cironline.org/richmond/images/logo1x.png">
+    <meta property="og:image" content="">
     <meta property="og:description" content="">
 
-    <title>opd_use_of_force</title>
-    <link rel="shortcut icon" type="image/x-icon" href="http://cironline.org/sites/all/themes/cir/favicon.ico">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="">
 
     {% compress css %}
     <!-- bower:css -->
@@ -32,21 +32,30 @@
     {% endblock %}
 
     {% compress js %}
+    <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+    <script src="{% static 'bower_components/d3/d3.js' %}"></script>
+    <script src="{% static 'bower_components/d3-plugins/geo/tile/tile.js' %}"></script>
+    <script src="{% static 'bower_components/d3-plugins/hexbin/hexbin.js' %}"></script>
+    {% endcompress %}
+
+    {% compress js %}
     <!-- bower:js -->
     <!-- endbower -->
     <script src="{% static "scripts/main.js" %}"></script>
     {% endcompress %}
 
-    <script type="text/javascript" async src="//platform.twitter.com/widgets.js"></script>
+    {% block javascript %}
+    {% endblock %}
+
+    <script type="text/javascript " async src="//platform.twitter.com/widgets.js"></script>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       var WebFontConfig = {
-        google: { families: ['Lato',] },
-        typekit: { id: 'quu2bck' }
+        google: { families: ['Lato',] }
       };
 
-      _gaq.push(['_setAccount', 'UA-2147301-15']);
-      _gaq.push(['_setDomainName', '.cironline.org']);
+      _gaq.push(['_setAccount', 'UA-XXXXXXX-XX']);
+      _gaq.push(['_setDomainName', '.sfchronicle.com']);
       _gaq.push(['_trackPageview']);
 
       (function() {

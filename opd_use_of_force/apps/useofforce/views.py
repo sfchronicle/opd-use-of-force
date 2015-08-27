@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from bakery.views import BuildableListView, BuildableDetailView
 
-# Create your views here.
+from opd_use_of_force.apps.useofforce.models import Incident
+
+
+class IncidentListView(BuildableListView):
+    model = Incident
+    context_object_name = 'incidents'
+    template_name = 'incident_map.html' 

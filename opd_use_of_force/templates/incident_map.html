@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load geojson_tags %}
+{% block title %} OPD Incident Map {% endblock %}
+
+{% block content %}
+<main class="container">
+    <aside class="grayscale" id="map"></aside>
+</main>
+{% endblock %}
+
+{% block javascript %}
+<script id="incident-json">
+var incidents = {
+    'type': 'FeatureCollection',
+    'features': [
+    {% for incident in incidents %}
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [{{ incident.longitude }}, {{ incident.latitude }}]
+            },
+            'properties': {
+                'address': '{{ incident.address }}',
+                'date': '{{ incident.date }}',
+                'city': '{{ incident.city }}',
+                'state': '{{ incident.state }}',
+                'zip': '{{ incident.zipcode }}'
+            }
+        },
+    {% endfor %}
+    ]
+};
+
+</script>
+<script>
+    $(document).ready(function() {
+        App.load();
+    });
+</script>
+{% endblock %}

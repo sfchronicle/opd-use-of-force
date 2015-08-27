@@ -1,0 +1,183 @@
+body {
+  margin: 0;
+}
+
+.light {
+  path {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .park, .nature_reserve, .wood, .protected-grayscale {
+    fill: #e0f9d9;
+    stroke: none;
+  }
+  .ocean {
+    fill: #d9f2f9;
+    stroke: none;
+  }
+  .major_road {
+    stroke-width: .8px;
+  }
+  .minor_road {}
+  .highway {
+    stroke: #CFCFCF;
+    stroke-width: 1.5px;
+  }
+  .rail {}
+  .buildings path {
+    stroke: none;
+  }
+}
+
+.grayscale {
+  path {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .park, .nature_reserve, .wood, .protected-grayscale {
+    fill: #eee;
+    stroke: none;
+  }
+  .ocean, .water, .riverbank {
+    fill: #ccc;
+    stroke: #ccc;
+  }
+  .water-layer, .river {
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+  .major_road {
+    stroke: #aaa;
+    stroke-width: 1px;
+  }
+  .minor_road {
+    stroke: #ccc;
+    stroke-width: .5px;
+  }
+  .highway {
+    stroke: #666;
+    stroke-width: 1.5px;
+  }
+  .rail {}
+  .buildings path {
+    stroke: none;
+  }
+}
+
+.default-mapzen {
+  path {
+    fill: none;
+    stroke: #fff;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .water, .ocean {
+    fill: #9DD9D2;
+    stroke: #9DD9D2;
+  }
+  .water-layer, .river, .stream, .canal {
+    stroke: #9DD9D2;
+    stroke-width: 1.5px;
+  }
+  .major_road {
+    stroke: #fb7b7a;
+    stroke-width: 1px;
+  }
+  .minor_road {
+    stroke: #999;
+    stroke-width: 0.5px;
+  }
+  .highway {
+    stroke: #FA4A48;
+    stroke-width: 1.5px;
+  }
+  .buildings-layer {
+    stroke: #987284;
+    stroke-width: 0.15px;
+  }
+  .park, .nature_reserve, .wood, .protected-grayscale {
+    fill: #88D18A;
+  }
+  .rail {
+    stroke: #503D3F;
+    stroke-width: 0.5px;
+  }
+}
+
+.medium {
+  path {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .park, .nature_reserve, .wood, .protected-grayscale {
+    fill: #88D18A;
+    stroke: none;
+  }
+  .ocean, .water, .riverbank {
+    fill: #a3e1ef;
+    stroke: none;
+  }
+  .water-layer, .river {
+    stroke: #a3e1ef;
+    stroke-width: 1.5px;
+  }
+  .major_road {
+    stroke: #f29681;
+    stroke-width: .8px;
+  }
+  .minor_road {
+    stroke: #aaa;
+    stroke-width: .5px;
+  }
+  .highway {
+    stroke: #c41108;
+    stroke-width: 1.5px;
+  }
+  .rail {}
+  .buildings path {
+    stroke: none;
+  }
+}
+
+.grayscale {
+  .overlay1 {
+    fill: #8d23c4;
+    opacity: 0.5;
+  }
+  .overlay2 {
+    fill: #33e224;
+    opacity: 0.5;
+  }
+}
+
+path.incident {
+  fill: #c41108;
+  opacity: 0.5;
+  stroke: #222;
+  stroke-width: 0.5px;
+}
+
+.credit {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  padding: 0px 5px;
+  font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  a {
+    text-decoration: none;
+    color: #0078a8;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
