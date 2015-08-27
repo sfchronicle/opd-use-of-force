@@ -1,0 +1,17 @@
+*.pyc
+django.log
+django.log*
+bower_components
+node_modules
+.DS_Store
+.coverage
+data/
+# local settings
+*/settings/local_settings.py
+
+build/
+gzip/
+static/
+
+# ignore the css file
+*/assets/styles/*.css
