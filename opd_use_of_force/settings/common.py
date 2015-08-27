@@ -67,6 +67,7 @@ INSTALLED_APPS = (
 
     # Project Apps
     'lib',
+    'opd_use_of_force.apps.useofforce',
 )
 
 if USE_POSTGIS:
