@@ -5,6 +5,15 @@
 {% block content %}
 <main class="container">
     <aside class="grayscale" id="map"></aside>
+    <div class="row">
+        <div class="large-4 columns">
+            <h2>Hed</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus iste libero impedit sit nisi earum minima fugit, ipsa sapiente cum soluta nostrum distinctio velit a, nobis. Recusandae quidem voluptate laborum.</p>
+
+            <span class="year-range">2006-2015</span> <span class="divider">|</span> <a href="#" id="show-all-data" class="button tiny secondary">Show all</a>
+            <div class="slider"></div>
+        </div>
+    </div>
 </main>
 {% endblock %}
 
@@ -23,6 +32,7 @@ var incidents = {
             'properties': {
                 'address': '{{ incident.address }}',
                 'date': '{{ incident.date }}',
+                'year': '{{ incident.year }}',
                 'city': '{{ incident.city }}',
                 'state': '{{ incident.state }}',
                 'zip': '{{ incident.zipcode }}'
@@ -35,7 +45,7 @@ var incidents = {
 </script>
 <script>
     $(document).ready(function() {
-        App.load();
+        App.init();
     });
 </script>
 {% endblock %}

@@ -16,6 +16,7 @@
 
     {% compress css %}
     <!-- bower:css -->
+    <link rel="stylesheet" href="{% static 'bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css' %}">
     <!-- endbower -->
     <link rel="stylesheet" href="{% static "styles/main.css" %}">
     {% endcompress %}
@@ -33,6 +34,7 @@
 
     {% compress js %}
     <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+    <script src="{% static 'bower_components/jquery-ui/jquery-ui.js' %}"></script>
     <script src="{% static 'bower_components/d3/d3.js' %}"></script>
     <script src="{% static 'bower_components/d3-plugins/geo/tile/tile.js' %}"></script>
     <script src="{% static 'bower_components/d3-plugins/hexbin/hexbin.js' %}"></script>

@@ -2,15 +2,54 @@
 'use strict';
 
 var App = App || {
-    width: 1300,
-    height: 800,
-    coordinates: [-122.2708, 37.8044],
-    rendered: false,
+    width: 1350,
+    height: 600,
+    coordinates: [-122.2708, 37.8044]
 };
 
 App.init = function () {
-    console.log('YO');
-}
+    var self = this;
+    self.load();
+    self.slider();
+};
+
+App.slider = function () {
+    var self = this;
+    $('#show-all-data').on('click', function (event) {
+        event.preventDefault();
+        self.svg.select('g.incidents').remove();
+        $('.year-range').text('2006-2015');
+        self.renderJson(self.svg, incidents, 'incident');
+    });
+
+    $('.slider').slider({
+        min: 2006,
+        max: 2015,
+        slide: function (event, ui) {
+            $('.year-range').text(ui.value);
+            self.svg.select('g.incidents').remove();
+            var data = incidents.features.filter(function (incident) {
+                return parseInt(incident.properties.year) === ui.value;
+            });
+
+            self.renderJson(self.svg, { 'features': data }, 'incident');
+        }
+    });
+};
+
+App.renderJson = function (svg, json, className) {
+    // render json data on map
+    var path = path || App.path;
+    svg.append("g")
+        .attr('class', 'incidents')
+      .selectAll("path")
+        .data(json.features)
+      .enter().append("path")
+        .attr('class', className)
+        .attr("d", path);
+        //  .on('mouseover', tip.show)
+        //  .on('mouseout', tip.hide);
+};
 
 App.load = function () {
 	var self = this;
@@ -36,7 +75,7 @@ App.load = function () {
       .scale((1 << 20) / 2 / Math.PI)
       .translate([self.width / 2, self.height / 2]);
 
-    var path = d3.geo.path()
+    var path = self.path = d3.geo.path()
       .projection(projection);
 
 /****** // Tooltip
@@ -46,28 +85,16 @@ App.load = function () {
 //  uncomment line 83 to call this function
 *************/
 
-/****** // Zoom functionality
-	var zoom = d3.behavior.zoom()
-    .scale(projection.scale() * 2 * Math.PI)
-    .scaleExtent([1 << 12, 1 << 25])
-    // San Francisco - 37.7524/-122.4407
-    .translate(projection([-122.4407, 37.7524]).map(function(x) { return -x; }))
-    .on("zoom", zoomed);
-//  uncomment line 84 to call zoom function
-*************/
-
-	var svg = d3.select('#map').append('div').classed('svg-container', true)
+	self.svg = d3.select('#map').append('div').classed('svg-container', true)
         .append('svg')
           .attr('viewBox', '0 0 '+self.width+' '+self.height)
           .attr('preserveAspectRatio', 'xMidYMid')
           .classed('svg-content-responsive', true)
 
-    svg.call(renderTiles);
-    renderJson(svg, incidents, 'incident');
+    self.svg.call(renderTiles);
+    self.renderJson(self.svg, incidents, 'incident');
 //	  .call(renderLegend);
-//	  .call(tip)
-//    .call(zoom);
-
+//	  .call(tip);
 
     function renderTiles (svg) {
         /* Hit Mapzen Vector Tile API for map data */
@@ -95,17 +122,4 @@ App.load = function () {
               });
             });
       }
-
-    function renderJson (svg, json, className) {
-        // render json data on map
-
-        svg.append("g")
-            .selectAll("path")
-            .data(json.features)
-            .enter().append("path")
-            .attr('class', className)
-            .attr("d", path);
-            //  .on('mouseover', tip.show)
-            //  .on('mouseout', tip.hide);
-    }
-}
+};

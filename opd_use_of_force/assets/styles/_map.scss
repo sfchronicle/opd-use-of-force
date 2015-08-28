@@ -2,6 +2,15 @@ body {
   margin: 0;
 }
 
+main {
+    position: relative;
+}
+
+#map {
+    position: absolute;
+    width: 100%;
+}
+
 .light {
   path {
     fill: none;
