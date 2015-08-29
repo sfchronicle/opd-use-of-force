@@ -1,14 +1,81 @@
+$red: #C12020;
+
 body {
   margin: 0;
+  font-family: 'Antenna', 'Helvetica Neue', 'Roboto', Arial, sans-serif;
 }
 
 main {
     position: relative;
+
+    .row {
+        max-width: 100%;
+    }
+    &.debug {
+        max-width: 780px;
+        margin: 50px auto;
+    }
 }
 
 #map {
-    position: absolute;
+    //position: absolute;
     width: 100%;
+}
+
+#article-block {
+    background-color: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 0;
+}
+
+.label.custom-label {
+    background-color: $red;
+    font-family: 'Antenna';
+}
+
+.instruction {
+    font-size: 0.7em;
+    color: #444;
+}
+
+.map-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    #label-year-range {
+        margin-bottom: 10px;
+
+        .year-range {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+    }
+    #label-total-incidents {
+        text-transform: uppercase;
+        font-weight: bold;
+
+        .total-incidents {
+            display: block;
+            font-size: 2.2em;
+        }
+    }
+}
+
+.attribution {
+    float: right;
+    a {
+        color: $red;
+        &:hover {
+            color: darken($red, 10%);
+        }
+    }
+}
+
+footer {
+    p {
+        color: #777;
+    }
 }
 
 .light {
@@ -167,7 +234,7 @@ main {
 
 path.incident {
   fill: #c41108;
-  opacity: 0.5;
+  opacity: 1;
   stroke: #222;
   stroke-width: 0.5px;
 }

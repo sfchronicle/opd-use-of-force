@@ -1,10 +1,43 @@
 // jshint devel:true
 'use strict';
 
+// var incidents = [
+//     {% for incident in incidents %}
+//         {
+//             'type': 'Feature',
+//             'geometry': {
+//                 'type': 'Point',
+//                 'coordinates': [{{ incident.longitude }}, {{ incident.latitude }}]
+//             },
+//             'properties': {
+//                 'address': '{{ incident.address }}',
+//                 'date': '{{ incident.date }}',
+//                 'year': '{{ incident.year }}',
+//                 'city': '{{ incident.city }}',
+//                 'state': '{{ incident.state }}',
+//                 'zip': '{{ incident.zipcode }}'
+//             }
+//         },
+//     {% endfor %}
+// ];
+
+function addCommas (val) {
+    // Add comma to numbers
+    while (/(\d+)(\d{3})/.test(val.toString())){
+        val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+    }
+    return val;
+}
+
+function updateMapLabel (yearRange, totalIncidents) {
+    $('.year-range').text(yearRange);
+    $('.total-incidents').text(addCommas(totalIncidents));
+}
+
 var App = App || {
     width: 1350,
     height: 600,
-    coordinates: [-122.2708, 37.8044]
+    coordinates: [-122.2708, 37.7990]
 };
 
 App.init = function () {
@@ -15,24 +48,33 @@ App.init = function () {
 
 App.slider = function () {
     var self = this;
+    updateMapLabel('2006-2015', incidents.length);
+
     $('#show-all-data').on('click', function (event) {
         event.preventDefault();
         self.svg.select('g.incidents').remove();
-        $('.year-range').text('2006-2015');
+        $('#total-label').css('display', 'inline');
+
         self.renderJson(self.svg, incidents, 'incident');
+
+        updateMapLabel('2006-2015', incidents.length);
+
     });
 
     $('.slider').slider({
         min: 2006,
         max: 2015,
         slide: function (event, ui) {
-            $('.year-range').text(ui.value);
             self.svg.select('g.incidents').remove();
-            var data = incidents.features.filter(function (incident) {
-                return parseInt(incident.properties.year) === ui.value;
+            var data = incidents.filter(function (incident) {
+                return parseInt(incident[2].year) === ui.value;
             });
 
-            self.renderJson(self.svg, { 'features': data }, 'incident');
+            $('#total-label').css('display', 'none');
+
+            updateMapLabel(ui.value, data.length);
+
+            self.renderJson(self.svg, data, 'incident');
         }
     });
 };
@@ -40,13 +82,23 @@ App.slider = function () {
 App.renderJson = function (svg, json, className) {
     // render json data on map
     var path = path || App.path;
+
+    var hexbin = d3.hexbin()
+        .size([self.width, self.height])
+        .radius(8);
+
+    var radius = d3.scale.sqrt()
+        .domain([0, 12])
+        .range([0, 8]);
+
     svg.append("g")
-        .attr('class', 'incidents')
+        .attr('class', 'incidents hexagons')
       .selectAll("path")
-        .data(json.features)
+        .data(hexbin(json).sort(function(a, b) { return b.length - a.length; }))
       .enter().append("path")
         .attr('class', className)
-        .attr("d", path);
+        .attr("d", function(d) { return hexbin.hexagon(radius(d.length)); })
+        .attr('transform', function (d) { return "translate(" + d.x + "," + d.y + ")"; });
         //  .on('mouseover', tip.show)
         //  .on('mouseout', tip.hide);
 };
@@ -61,14 +113,6 @@ App.load = function () {
     //     .domain([new Date(1962, 0, 1), new Date(2006, 0, 1)])
     //     .range(["black", "steelblue"])
     //     .interpolate(d3.interpolateLab);
-
-    var hexbin = d3.hexbin()
-        .size([self.width, self.height])
-        .radius(8);
-
-    var radius = d3.scale.sqrt()
-        .domain([0, 12])
-        .range([0, 8]);
 
     var projection = d3.geo.mercator()
       .center(self.coordinates)
@@ -89,7 +133,15 @@ App.load = function () {
         .append('svg')
           .attr('viewBox', '0 0 '+self.width+' '+self.height)
           .attr('preserveAspectRatio', 'xMidYMid')
-          .classed('svg-content-responsive', true)
+          .classed('svg-content-responsive', true);
+
+    // transform data
+    incidents.forEach(function (d) {
+        // var p = projection(d.geometry.coordinates);
+        // d.geometry.coordinates[0] = p[0], d.geometry.coordinates[1] = p[1];
+        var p = projection(d);
+        d[0] = p[0], d[1] = p[1];
+    });
 
     self.svg.call(renderTiles);
     self.renderJson(self.svg, incidents, 'incident');

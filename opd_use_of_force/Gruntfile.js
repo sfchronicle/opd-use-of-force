@@ -29,7 +29,7 @@ module.exports = function (grunt) {
 
     // Project settings
     config: config,
-    
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       options: {
@@ -50,20 +50,20 @@ module.exports = function (grunt) {
         files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['sass:server', 'autoprefixer']
       },
-      styles: {
-        files: ['<%= config.app %>/styles/{,*/}*.css'],
-        tasks: ['newer:copy:styles', 'autoprefixer']
-      },
+    //   styles: {
+    //     files: ['<%= config.app %>/styles/{,*/}*.css'],
+    //     tasks: ['newer:copy:styles', 'autoprefixer']
+    //   },
       livereload: {
         files: [
           'templates/{,*/}*.html',
           '<%= config.app %>/{,*/}*.html',
-          '<%= config.app %>/styles/{,*/}*.css',
+        //   '<%= config.app %>/styles/{,*/}*.css',
           '<%= config.app %>/images/{,*/}*'
         ]
       }
     },
-    
+
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -111,18 +111,18 @@ module.exports = function (grunt) {
         map: {
           prev: '<%= config.app %>/styles'
         }
-        
+
       },
       dist: {
         files: [{
           expand: true,
           cwd: '<%= config.app %>/styles',
-          src: '{,*/}*.css',
+          src: ['{,*/}*.css',  '!external/{,*/}*.css'],
           dest: '<%= config.app %>/styles'
         }]
       }
     },
-    
+
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
@@ -256,7 +256,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
-      'autoprefixer',
+    //   'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
@@ -271,14 +271,14 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     // 'wiredep', /* enable to let grunt autopopulate (base|index).html with bower components */
     'sass',
-    'autoprefixer',
+    // 'autoprefixer',
     'htmlmin'
   ]);
 
   grunt.registerTask('default', [
     // 'wiredep', /* enable to let grunt autopopulate (base|index).html with bower components */
     'sass',
-    'autoprefixer',
+    // 'autoprefixer',
     'watch'
   ]);
 };

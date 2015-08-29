@@ -3,45 +3,49 @@
 {% block title %} OPD Incident Map {% endblock %}
 
 {% block content %}
-<main class="container">
-    <aside class="grayscale" id="map"></aside>
-    <div class="row">
-        <div class="large-4 columns">
-            <h2>Hed</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus iste libero impedit sit nisi earum minima fugit, ipsa sapiente cum soluta nostrum distinctio velit a, nobis. Recusandae quidem voluptate laborum.</p>
+<main class="container {% if debug %}debug{% endif %}">
+    <div class="map-container">
+        <aside class="grayscale" id="map"></aside>
 
-            <span class="year-range">2006-2015</span> <span class="divider">|</span> <a href="#" id="show-all-data" class="button tiny secondary">Show all</a>
-            <div class="slider"></div>
+        <div class="map-label">
+            <p id="label-year-range"><span class="year-range label custom-label"></span></p>
+            <p id="label-total-incidents"><span id="total-label">Total</span> Incidents: <span class="total-incidents"></span></p>
+        </div>
+
+        <small class="attribution">
+          <a href="https://github.com/sfchronicle" target="_top">SF Chronicle</a> | © <a href="https://www.openstreetmap.org/copyright" target="_top">OpenStreetMap contributors</a> | <a href="https://mapzen.com/projects/vector-tiles" title="Tiles courtesy of Mapzen" target="_top">Mapzen</a>
+      </small>
+    </div>
+    <div class="row">
+        <div class="large-4 columns" id="article-block">
+            <h2>Oakland Police Department use of force TK since 2006</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus iste libero impedit sit nisi earum minima fugit, ipsa sapiente.</p>
+
+            <small class="instruction">Slide to view incidents by year</small>
+            <div class="slider"></div> <span class="divider">|</span> <a href="#" id="show-all-data" class="button tiny secondary">Show all</a>
         </div>
     </div>
+    <footer class="row">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas accusamus deleniti sit voluptatem molestias incidunt eveniet quasi eligendi dolorem? Aliquid nostrum quo doloribus facilis consectetur. <b>Graphic: Aaron Williams and Michael Grant | The Chronicle</b></p>
+    </footer>
 </main>
+
 {% endblock %}
 
 {% block javascript %}
 <script id="incident-json">
-var incidents = {
-    'type': 'FeatureCollection',
-    'features': [
-    {% for incident in incidents %}
-        {
-            'type': 'Feature',
-            'geometry': {
-                'type': 'Point',
-                'coordinates': [{{ incident.longitude }}, {{ incident.latitude }}]
-            },
-            'properties': {
-                'address': '{{ incident.address }}',
-                'date': '{{ incident.date }}',
-                'year': '{{ incident.year }}',
-                'city': '{{ incident.city }}',
-                'state': '{{ incident.state }}',
-                'zip': '{{ incident.zipcode }}'
-            }
-        },
-    {% endfor %}
-    ]
-};
-
+var incidents = [
+{% for incident in incidents %}
+    [{{ incident.longitude }}, {{ incident.latitude }}, {
+                    'address': '{{ incident.address }}',
+                    'date': '{{ incident.date }}',
+                    'year': '{{ incident.year }}',
+                    'city': '{{ incident.city }}',
+                    'state': '{{ incident.state }}',
+                    'zip': '{{ incident.zipcode }}'
+    }],
+{% endfor %}
+];
 </script>
 <script>
     $(document).ready(function() {

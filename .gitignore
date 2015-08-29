@@ -12,6 +12,7 @@ data/
 build/
 gzip/
 static/
+migrations/
 
 # ignore the css file
 */assets/styles/*.css

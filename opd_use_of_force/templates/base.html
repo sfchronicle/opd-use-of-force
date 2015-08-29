@@ -15,6 +15,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="">
 
     {% compress css %}
+    <!-- www.sfchronicle.com -->
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.sharedmain.r6.21.1.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.sharedmodules.r6.21.1.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.sharedpages.r6.21.1.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.sitemain.r6.21.1.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.sitemodules.r6.21.1.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.sitepages.r6.21.1.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.section.r6.21.1.0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/external/global.ie8.r6.21.1.0.css' %}">
+    {% endcompress %}
+
+    {% compress css %}
     <!-- bower:css -->
     <link rel="stylesheet" href="{% static 'bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css' %}">
     <!-- endbower -->
