@@ -1,26 +1,6 @@
 // jshint devel:true
 'use strict';
 
-// var incidents = [
-//     {% for incident in incidents %}
-//         {
-//             'type': 'Feature',
-//             'geometry': {
-//                 'type': 'Point',
-//                 'coordinates': [{{ incident.longitude }}, {{ incident.latitude }}]
-//             },
-//             'properties': {
-//                 'address': '{{ incident.address }}',
-//                 'date': '{{ incident.date }}',
-//                 'year': '{{ incident.year }}',
-//                 'city': '{{ incident.city }}',
-//                 'state': '{{ incident.state }}',
-//                 'zip': '{{ incident.zipcode }}'
-//             }
-//         },
-//     {% endfor %}
-// ];
-
 function addCommas (val) {
     // Add comma to numbers
     while (/(\d+)(\d{3})/.test(val.toString())){
@@ -36,7 +16,7 @@ function updateMapLabel (yearRange, totalIncidents) {
 
 var App = App || {
     width: 1350,
-    height: 600,
+    height: 650,
     coordinates: [-122.2708, 37.7990]
 };
 
@@ -44,11 +24,12 @@ App.init = function () {
     var self = this;
     self.load();
     self.slider();
+    $(document).foundation();
 };
 
 App.slider = function () {
     var self = this;
-    updateMapLabel('2006-2015', incidents.length);
+    updateMapLabel('2007-2015', incidents.length);
 
     $('#show-all-data').on('click', function (event) {
         event.preventDefault();
@@ -57,14 +38,17 @@ App.slider = function () {
 
         self.renderJson(self.svg, incidents, 'incident');
 
-        updateMapLabel('2006-2015', incidents.length);
+        updateMapLabel('2007-2015', incidents.length);
+        $('.slider').slider('option', 'value', 2007);
 
     });
 
     $('.slider').slider({
-        min: 2006,
+        min: 2007,
         max: 2015,
         slide: function (event, ui) {
+            $('.button').addClass('disabled');
+
             self.svg.select('g.incidents').remove();
             var data = incidents.filter(function (incident) {
                 return parseInt(incident[2].year) === ui.value;
@@ -74,27 +58,48 @@ App.slider = function () {
 
             updateMapLabel(ui.value, data.length);
 
-            self.renderJson(self.svg, data, 'incident');
+            self.renderJson(self.svg, data, 'incident', 4);
+        },
+        change: function (event, ui) {
+            $('.button').removeClass('disabled');
         }
     });
 };
 
-App.renderJson = function (svg, json, className) {
+App._formatData= function (hexbin, json, slideAdjustment) {
+    /* Given a d3.hexbin and JSON,
+       generate hexbin layout and domain for hexbin map
+    */
+    var bins = hexbin(json).sort(function(a, b) { return b.length - a.length; });
+    var count = [];
+    bins.forEach(function(elem) { count.push(elem.length); });
+    return {
+        data: bins,
+        domain: [0, (157.59416209911797 / slideAdjustment)] // [0, (ss.mean(count) + (ss.standardDeviation(count) * 3))]
+    };
+};
+
+App.renderJson = function (svg, json, className, slideAdjustment) {
     // render json data on map
+    var self = this;
     var path = path || App.path;
 
     var hexbin = d3.hexbin()
         .size([self.width, self.height])
         .radius(8);
 
+    var slideAdjustment = slideAdjustment || 1;
+    var data = self._formatData(hexbin, json, slideAdjustment);
+
     var radius = d3.scale.sqrt()
-        .domain([0, 12])
-        .range([0, 8]);
+        .domain(data.domain) // App._generateDomain(); 197.9668906095526
+        .range([1, 8])
+        //.clamp(true);
 
     svg.append("g")
         .attr('class', 'incidents hexagons')
       .selectAll("path")
-        .data(hexbin(json).sort(function(a, b) { return b.length - a.length; }))
+        .data(data.data)
       .enter().append("path")
         .attr('class', className)
         .attr("d", function(d) { return hexbin.hexagon(radius(d.length)); })
@@ -145,6 +150,9 @@ App.load = function () {
 
     self.svg.call(renderTiles);
     self.renderJson(self.svg, incidents, 'incident');
+    d3.select('#map').append('small')
+        .attr('class', 'attribution')
+        .html('© <a href="https://www.openstreetmap.org/copyright" target="_top">OpenStreetMap contributors</a> | <a href="https://mapzen.com/projects/vector-tiles" title="Tiles courtesy of Mapzen" target="_top">Mapzen</a>');
 //	  .call(renderLegend);
 //	  .call(tip);
 

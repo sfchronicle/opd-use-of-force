@@ -9,7 +9,5 @@ class IncidentListView(BuildableTemplateView):
     def get_context_data(self, **kwargs ):
         context = super(IncidentListView, self).get_context_data(**kwargs)
         context['incidents'] = Incident.objects.filter(
-            Q(city='Oakland'),
-            Q(date__range=['2006-01-01', '2015-12-31'])
-        )
+            date__range=['2007-01-01', '2015-12-31'])
         return context

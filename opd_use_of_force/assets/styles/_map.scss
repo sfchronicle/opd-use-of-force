@@ -1,47 +1,105 @@
 $red: #C12020;
+$black: #222;
+$link-color: #222;
+$graphic-font: 'Antenna';
+$border: 1px solid #A5A5A5;
+
+html,
+body {
+    height: 100%;
+}
 
 body {
   margin: 0;
-  font-family: 'Antenna', 'Helvetica Neue', 'Roboto', Arial, sans-serif;
+  font-family: $graphic-font, 'Helvetica Neue', 'Roboto', Arial, sans-serif;
 }
 
 main {
     position: relative;
+    border: $border;
+    max-width: 780px;
 
     .row {
         max-width: 100%;
     }
     &.debug {
-        max-width: 780px;
         margin: 50px auto;
     }
 }
 
+svg {
+    border-bottom: 1px solid #D9D9D9;
+}
+
 #map {
-    //position: absolute;
+    position: relative;
     width: 100%;
+}
+.graphic-byline {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.accordion {
+    .accordion-navigation {
+        &.active > a { background-color: white; }
+
+        a {
+            background-color: white;
+            padding-bottom: 0;
+            padding-left: 0;
+            padding-top: 6px;
+            font-family: $graphic-font;
+            font-weight: bold;
+
+            &:hover {
+                background-color: white;
+                text-decoration: underline;
+            }
+        }
+        .content {
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 5px;
+        }
+    }
+}
+
+.button {
+    font-family: $graphic-font;
+    font-size: 0.8em;
+    margin-bottom: 0;
 }
 
 #article-block {
     background-color: rgba(255, 255, 255, 0.8);
-    position: absolute;
-    top: 0;
+    box-shadow: 1px 1px 1px 1px #CCCCCC;
+    border: $border;
+
+    p {
+        font-size: 13px;
+        line-height: 1.5em;
+    }
 }
 
 .label.custom-label {
     background-color: $red;
-    font-family: 'Antenna';
+    font-family: $graphic-font;
 }
 
 .instruction {
     font-size: 0.7em;
     color: #444;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
 .map-label {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 1%;
+    min-width: 142px;
 
     #label-year-range {
         margin-bottom: 10px;
@@ -63,7 +121,12 @@ main {
 }
 
 .attribution {
-    float: right;
+    position: absolute;
+    bottom: 8px;
+    right: 7px;
+    font-size: 0.7em;
+    background-color: rgba(255,255,255,0.7);
+
     a {
         color: $red;
         &:hover {
@@ -73,8 +136,10 @@ main {
 }
 
 footer {
-    p {
+    small {
         color: #777;
+        display: block;
+        line-height: 1.5em;
     }
 }
 
@@ -256,4 +321,20 @@ path.incident {
       text-decoration: underline;
     }
   }
+}
+
+@media #{$large-up} {
+    #article-block {
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        padding: 20px;
+        margin: 10px;
+    }
+
+    footer {
+        position: relative;
+        z-index: 2;
+    }
+
 }

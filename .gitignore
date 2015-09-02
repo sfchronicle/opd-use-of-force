@@ -16,3 +16,4 @@ migrations/
 
 # ignore the css file
 */assets/styles/*.css
+.map

@@ -33,8 +33,12 @@
     <link rel="stylesheet" href="{% static "styles/main.css" %}">
     {% endcompress %}
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    {% compress js %}
     <!-- Modernizr -->
     <script src="{% static "bower_components/modernizr/modernizr.js" %}"></script>
+    {% endcompress %}
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -48,8 +52,12 @@
     <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'bower_components/jquery-ui/jquery-ui.js' %}"></script>
     <script src="{% static 'bower_components/d3/d3.js' %}"></script>
+    <script src="{% static 'bower_components/simple-statistics/dist/simple_statistics.js' %}"></script>
     <script src="{% static 'bower_components/d3-plugins/geo/tile/tile.js' %}"></script>
     <script src="{% static 'bower_components/d3-plugins/hexbin/hexbin.js' %}"></script>
+    <script src="{% static 'bower_components/foundation/js/foundation.js' %}"></script>
+    <script src="{% static 'bower_components/foundation/js/foundation/foundation.accordion.js' %}"></script>
+    <script src="{% static 'bower_components/foundation/js/foundation/foundation.tooltip.js' %}"></script>
     {% endcompress %}
 
     {% compress js %}
