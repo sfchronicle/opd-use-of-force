@@ -78,7 +78,7 @@ svg {
     border: $border;
 
     p {
-        font-size: 13px;
+        font-size: 12px;
         line-height: 1.5em;
     }
 }
@@ -172,7 +172,7 @@ footer {
   }
 }
 
-.grayscale {
+.grayscale .tile {
   path {
     fill: none;
     stroke: #e0e0e0;
@@ -286,7 +286,7 @@ footer {
   }
 }
 
-.grayscale {
+.grayscale .tile {
   .overlay1 {
     fill: #8d23c4;
     opacity: 0.5;
@@ -298,7 +298,7 @@ footer {
 }
 
 path.incident {
-  fill: #c41108;
+  //fill: #c41108;
   opacity: 1;
   stroke: #222;
   stroke-width: 0.5px;

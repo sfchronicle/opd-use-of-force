@@ -24,7 +24,13 @@ App.init = function () {
     var self = this;
     self.load();
     self.slider();
-    $(document).foundation();
+    $(document).foundation({
+        accordion: {
+            callback: function (accordion) {
+                window.pymChild.sendHeight();
+            }
+        }
+    });
 };
 
 App.slider = function () {
@@ -73,9 +79,16 @@ App._formatData= function (hexbin, json, slideAdjustment) {
     var bins = hexbin(json).sort(function(a, b) { return b.length - a.length; });
     var count = [];
     bins.forEach(function(elem) { count.push(elem.length); });
+    var domain = [0, (157.59416209911797 / slideAdjustment)]; // [0, (ss.mean(count) + (ss.standardDeviation(count) * 3))]
+    var color = d3.scale.linear()
+        .domain(domain)
+        .range(["#C12020", "#b21e1e"])  //.range(["#C17575", "#C12020"])
+        .interpolate(d3.interpolateLab);
+
     return {
         data: bins,
-        domain: [0, (157.59416209911797 / slideAdjustment)] // [0, (ss.mean(count) + (ss.standardDeviation(count) * 3))]
+        domain: domain,
+        color: color
     };
 };
 
@@ -103,6 +116,7 @@ App.renderJson = function (svg, json, className, slideAdjustment) {
       .enter().append("path")
         .attr('class', className)
         .attr("d", function(d) { return hexbin.hexagon(radius(d.length)); })
+        .attr('fill', function (d) { return data.color(d.length); })
         .attr('transform', function (d) { return "translate(" + d.x + "," + d.y + ")"; });
         //  .on('mouseover', tip.show)
         //  .on('mouseout', tip.hide);
@@ -166,6 +180,7 @@ App.load = function () {
           .enter().append('g')
             .each(function (d) {
               var g = d3.select(this);
+              g.attr('class', 'tile');
               d3.json("http://vector.mapzen.com/osm/all/" + d[2] + "/" + d[0] + "/" + d[1] + ".json?api_key=vector-tiles-ZS0fz7o", function(error, json) {
 
                 layers.forEach(function (layer) {

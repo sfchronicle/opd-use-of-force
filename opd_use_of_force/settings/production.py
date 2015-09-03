@@ -1,4 +1,5 @@
 import os
+from datetime import date
 
 from common import *
 
@@ -16,17 +17,20 @@ COMPRESS_OUTPUT_DIR = 'prod'
 BUILD_DIR = os.path.join(BASE_DIR, 'build')
 BAKERY_VIEWS = (
     # Django Bakery Views go here. Example:
-    # 'opd_use_of_force.apps.some_news_app.views.SomeNewsAppView',
+    'opd_use_of_force.apps.useofforce.views.IncidentListView',
 )
-AWS_STAGING_BUCKET_NAME = 'apps-staging-cironline-org'
-AWS_BUCKET_NAME = 'apps-cironline-org'
-AWS_MEDIA_BUCKET_NAME = 'media-apps-cironline-org'
+AWS_STAGING_BUCKET_NAME = 'staging.projects.sfchronicle.com'
+AWS_BUCKET_NAME = 'projects.sfchronicle.com'
+AWS_MEDIA_BUCKET_NAME = 'projects.sfchronicle.com'
 
-VERBOSE_APP_NAME = 'opd_use_of_force' # App name in production
+VERBOSE_APP_NAME = '{}/{}'.format(
+    date.today().year,
+    'graphic-opd-useofforce'
+)  # App name in production plus the publish year
 
-STATIC_URL = os.path.join(
+STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
+STATIC_URL = '{}/{}/{}/'.format(
     "//s3-us-west-1.amazonaws.com",
     AWS_MEDIA_BUCKET_NAME,
-    VERBOSE_APP_NAME,
-    '' # Adding an empty string ensures the path ends with a /
+    VERBOSE_APP_NAME
 )

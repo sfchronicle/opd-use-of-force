@@ -27,4 +27,5 @@ __all__ = (
     'compress',
     'reset',
     'publish',
+    's3deploy'
 )

@@ -5,6 +5,7 @@ from opd_use_of_force.apps.useofforce.models import Incident
 
 class IncidentListView(BuildableTemplateView):
     template_name = 'incident_map.html'
+    build_path = 'index.html'
 
     def get_context_data(self, **kwargs ):
         context = super(IncidentListView, self).get_context_data(**kwargs)

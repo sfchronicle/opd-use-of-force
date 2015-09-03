@@ -39,9 +39,9 @@ try:
         settings.AWS_ACCESS_KEY_ID,
         settings.AWS_SECRET_ACCESS_KEY
     )
-    s3_bucket = s3.get_bucket(AWS_BUCKET_NAME)
-    s3_media_bucket = s3.get_bucket(AWS_MEDIA_BUCKET_NAME)
-    s3_staging_bucket = s3.get_bucket(AWS_STAGING_BUCKET_NAME)
+    # s3_bucket = s3.get_bucket(AWS_BUCKET_NAME)
+    # s3_media_bucket = s3.get_bucket(AWS_MEDIA_BUCKET_NAME)
+    # s3_staging_bucket = s3.get_bucket(AWS_STAGING_BUCKET_NAME)
 
 except AttributeError:
     log("Yo! Add AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to ")
@@ -173,6 +173,9 @@ def build():
     local('python manage.py build \
         --skip-static --settings=opd_use_of_force.settings.production')
 
+    # hack to move whole directory over to build
+    local('cd {} && mv static/* build/'.format(settings.BASE_DIR))
+
 
 @task
 def unbuild():
@@ -200,6 +203,13 @@ def invalidate_buildpath():
     """Invalidate Cloudfront cache when pushed to production"""
     raise NotImplementedError
 
+@task
+def s3deploy():
+    """Deploy build directory to S3 using aws cli"""
+    # using aws cli since boto is busted with buckets that have periods (.) in the name
+    local('cd {} && aws s3 cp --recursive --acl public-read build/ s3://{}/{}'.format(
+        settings.BASE_DIR, AWS_BUCKET_NAME, VERBOSE_APP_NAME))
+    log('Deployed! visit http://{}/{}/\n'.format(AWS_BUCKET_NAME, VERBOSE_APP_NAME), 'green')
 
 @task()
 def publish(bucket='staging', dryrun='False'):
@@ -214,9 +224,11 @@ def publish(bucket='staging', dryrun='False'):
     reset()
     compress()
     build()
-    settings.USE_GRUNT and grunt_build()
-    if should_we_publish:
-        log('\nPublishing ...\n')
-        deploy_to_s3(bucket)
-    else:
-        log('\nBuild is complete but no assets were published to AWS S3\n')
+    s3deploy()
+
+    # settings.USE_GRUNT and grunt_build()
+    # if should_we_publish:
+    #     log('\nPublishing ...\n')
+    #     deploy_to_s3(bucket)
+    # else:
+    #     log('\nBuild is complete but no assets were published to AWS S3\n')

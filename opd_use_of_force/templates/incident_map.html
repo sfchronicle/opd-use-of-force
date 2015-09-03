@@ -14,8 +14,8 @@
     </div>
     <div class="row">
         <div class="large-4 columns" id="article-block">
-            <h2>Oakland police use of force</h2>
-            <p>Oakland Police Department has had over 22,000 <span data-tooltip aria-haspopup="true" role="tooltip" class="has-tip" title="Tooltips are awesome, you should totally use them!">use-of-force</span> incidents since 2007. Such incidents peaked in 2009, at 3,902 though incidents have declined steadily since May 2013.</p>
+            <h2>Use of force in Oakland</h2>
+            <p>An analysis of Oakland Police Department data shows a vast reduction over the past two years in <span data-tooltip aria-haspopup="true" role="tooltip" class="has-tip" title="The Oakland Police Department has a broad definition of use of force. It includes a range of behaviors, from grabbing suspects’ by the hair or bending their wrist to chokeholds and shootings.">use-of-force</span> incidents. Since Sean Whent was appointed interim chief in May 2013, reported use-of-force incidents have declined steadily, falling to 49 last month.</p>
 
             <small class="instruction">Slide to view incidents by year</small>
             <div class="slider"></div>
@@ -29,7 +29,7 @@
               <li class="accordion-navigation">
                 <a href="#methodology" class="methodology"><i class="fa fa-info-circle"></i> About this data</a>
                 <div id="methodology" class="content">
-                  <small>The Chronicle obtained Oakland Police Department data documenting instances in which officers used force. Some reports do not appear on the map due to imprecise addresses or difficulty geocoding a precise location, though 99 percent of total incidents were mapped to within one block.</small>
+                  <small>The Chronicle obtained Oakland Police Department data documenting more than 22,000 instances in which officers used force since 2007. Some incidents do not appear on the map due to imprecise addresses, though 99 percent of reports were mapped to within one block.</small>
                 </div>
               </li>
             </ul>
@@ -51,6 +51,7 @@ var incidents = [
 </script>
 <script>
     $(document).ready(function() {
+        window.pymChild = new pym.Child();
         App.init();
     });
 </script>
