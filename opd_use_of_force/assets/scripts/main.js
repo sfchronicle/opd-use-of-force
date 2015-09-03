@@ -24,18 +24,16 @@ App.init = function () {
     var self = this;
     self.load();
     self.slider();
-    $(document).foundation({
-        accordion: {
-            callback: function (accordion) {
-                window.pymChild.sendHeight();
-            }
-        }
-    });
+    $(document).foundation();
 };
 
 App.slider = function () {
     var self = this;
     updateMapLabel('2007-2015', incidents.length);
+
+    $('#methodology').on('toggled', function (event, accordion) {
+        pymChild.sendHeight();
+    });
 
     $('#show-all-data').on('click', function (event) {
         event.preventDefault();
@@ -196,5 +194,8 @@ App.load = function () {
                 });
               });
             });
+        try {
+            pymChild.sendHeight();
+        } catch (e) {}
       }
 };

@@ -4,11 +4,6 @@ $link-color: #222;
 $graphic-font: 'Antenna';
 $border: 1px solid #A5A5A5;
 
-html,
-body {
-    height: 100%;
-}
-
 body {
   margin: 0;
   font-family: $graphic-font, 'Helvetica Neue', 'Roboto', Arial, sans-serif;
@@ -42,6 +37,8 @@ svg {
 }
 
 .accordion {
+    margin-top: 20px;
+
     .accordion-navigation {
         &.active > a { background-color: white; }
 
@@ -74,8 +71,6 @@ svg {
 
 #article-block {
     background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 1px 1px 1px 1px #CCCCCC;
-    border: $border;
 
     p {
         font-size: 12px;
@@ -323,6 +318,26 @@ path.incident {
   }
 }
 
+@media #{$small-only} {
+    .map-label {
+        width: 100%;
+
+        p {
+            display: inline-block;
+        }
+    }
+
+    #label-year-range {
+        float: left;
+    }
+
+    #label-total-incidents {
+        float: right;
+        font-size: 12px;
+        text-align: right;
+    }
+}
+
 @media #{$large-up} {
     #article-block {
         position: absolute;
@@ -330,6 +345,9 @@ path.incident {
         z-index: 1;
         padding: 20px;
         margin: 10px;
+
+        box-shadow: 1px 1px 1px 1px #CCCCCC;
+        border: $border;
     }
 
     footer {

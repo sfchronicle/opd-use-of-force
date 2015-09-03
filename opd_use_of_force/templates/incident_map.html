@@ -51,7 +51,16 @@ var incidents = [
 </script>
 <script>
     $(document).ready(function() {
-        window.pymChild = new pym.Child();
+        try {
+            window.pymChild = new pym.Child();
+
+            $(window).resize(function(event) {
+                pymChild.sendHeight();
+            });
+        } catch (e) {
+            console.warn(e);
+        }
+
         App.init();
     });
 </script>
