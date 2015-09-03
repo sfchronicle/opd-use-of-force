@@ -46,8 +46,8 @@
     {% endblock %}
 
     <script src="//projects.sfchronicle.com/shared/js/pym.min.js"></script>
-    <script src="//www.sfchronicle.com/js/jquery-1.8.1.min.js"></script>
     {% compress js %}
+    <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
     <script src="{% static 'bower_components/touche/src/touche.js' %}"></script>
     <script src="{% static 'bower_components/nouislider/distribute/nouislider.js' %}"></script>
     <script src="{% static 'bower_components/d3/d3.js' %}"></script>
