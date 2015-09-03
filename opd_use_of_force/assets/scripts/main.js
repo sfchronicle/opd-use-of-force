@@ -43,30 +43,42 @@ App.slider = function () {
         self.renderJson(self.svg, incidents, 'incident');
 
         updateMapLabel('2007-2015', incidents.length);
-        $('.slider').slider('option', 'value', 2007);
+        slider.noUiSlider.set(2007);
 
     });
 
-    $('.slider').slider({
-        min: 2007,
-        max: 2015,
-        slide: function (event, ui) {
-            $('.button').addClass('disabled');
+    var slider = document.getElementById('slider');
+    noUiSlider.create(slider, {
+        step: 1,
+    	start: [ 2007], // Handle start position
+    	// step: 10, // Slider moves in increments of '10'
+    	// margin: 20, // Handles must be more than '20' apart
+    	// connect: true, // Display a colored bar between the handles
+    	// direction: 'rtl', // Put '0' at the bottom of the slider
+    	// orientation: 'vertical', // Orient the slider vertically
+    	// behaviour: 'tap-drag', // Move handle on tap, bar is draggable
+    	range: { // Slider can select '0' to '100'
+    		'min': 2007,
+    		'max': 2015
+    	}
+    });
 
-            self.svg.select('g.incidents').remove();
-            var data = incidents.filter(function (incident) {
-                return parseInt(incident[2].year) === ui.value;
-            });
+    slider.noUiSlider.on('slide', function (values, handle, unencoded) {
+        $('.button').addClass('disabled');
 
-            $('#total-label').css('display', 'none');
+        self.svg.select('g.incidents').remove();
+        var data = incidents.filter(function (incident) {
+            return parseInt(incident[2].year) === unencoded;
+        });
 
-            updateMapLabel(ui.value, data.length);
+        $('#total-label').css('display', 'none');
 
-            self.renderJson(self.svg, data, 'incident', 4);
-        },
-        change: function (event, ui) {
-            $('.button').removeClass('disabled');
-        }
+        updateMapLabel(unencoded, data.length);
+
+        self.renderJson(self.svg, data, 'incident', 4);
+    });
+    slider.noUiSlider.on('change', function () {
+        $('.button').removeClass('disabled');
     });
 };
 
