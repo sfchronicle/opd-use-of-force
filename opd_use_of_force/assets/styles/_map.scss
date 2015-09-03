@@ -12,7 +12,7 @@ body {
 main {
     position: relative;
     border: $border;
-    max-width: 780px;
+    //max-width: 1200px;
 
     .row {
         max-width: 100%;
@@ -31,7 +31,7 @@ svg {
     width: 100%;
 }
 .graphic-byline {
-    display: block;
+    display: inline-block;
     margin-top: 10px;
     margin-bottom: 20px;
 }
@@ -329,7 +329,27 @@ path.incident {
   }
 }
 
+#social {
+    display: inline-block;
+    float: right;
+    margin-bottom: 5px;
+
+    #twitter-icon {
+        color: #00aced;
+    }
+
+    #facebook-icon {
+        color: #3b5998;
+    }
+}
+
 @media #{$small-only} {
+    #social {
+        float: left;
+        li:nth-child(1) {
+            margin-left: 0;
+        }
+    }
     .map-label {
         width: 100%;
 

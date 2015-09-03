@@ -17,6 +17,10 @@
             <h2>Use of force in Oakland</h2>
             <p>An analysis of Oakland Police Department data shows a vast reduction over the past two years in <span data-tooltip data-options="disable_for_touch:true" aria-haspopup="true" role="tooltip" class="has-tip" title="The Oakland Police Department has a broad definition of use of force. It includes a range of behaviors, from grabbing suspects’ by the hair or bending their wrist to chokeholds and shootings.">use-of-force</span> incidents. Since Sean Whent was appointed interim chief in May 2013, reported use-of-force incidents have declined steadily, falling to 49 last month.</p>
 
+            <aside class="show-for-large-up">
+                {% include "_social-include.html" %}
+            </aside>
+
             <small class="instruction">Slide to view incidents by year</small>
             <div id="slider"></div>
             <br>
@@ -35,6 +39,10 @@
             </ul>
 
             <small class="graphic-byline">Graphic: Aaron Williams, Michael Grant and Maegan Clawges | The Chronicle</small>
+
+            <aside class="hide-for-large-up">
+                {% include "_social-include.html" %}
+            </aside>
         </div>
     </footer>
 </main>
@@ -49,7 +57,7 @@ var incidents = [
 {% endfor %}
 ];
 </script>
-<script>    
+<script>
     $(document).ready(function() {
         try {
             window.pymChild = new pym.Child();
