@@ -51,12 +51,6 @@ App.slider = function () {
     noUiSlider.create(slider, {
         step: 1,
     	start: [ 2007], // Handle start position
-    	// step: 10, // Slider moves in increments of '10'
-    	// margin: 20, // Handles must be more than '20' apart
-    	// connect: true, // Display a colored bar between the handles
-    	// direction: 'rtl', // Put '0' at the bottom of the slider
-    	// orientation: 'vertical', // Orient the slider vertically
-    	// behaviour: 'tap-drag', // Move handle on tap, bar is draggable
     	range: { // Slider can select '0' to '100'
     		'min': 2007,
     		'max': 2015
@@ -128,8 +122,6 @@ App.renderJson = function (svg, json, className, slideAdjustment) {
         .attr("d", function(d) { return hexbin.hexagon(radius(d.length)); })
         .attr('fill', function (d) { return data.color(d.length); })
         .attr('transform', function (d) { return "translate(" + d.x + "," + d.y + ")"; });
-        //  .on('mouseover', tip.show)
-        //  .on('mouseout', tip.hide);
 };
 
 App.load = function () {
@@ -138,11 +130,6 @@ App.load = function () {
   	var tiler = d3.geo.tile()
       .size([self.width, self.height]);
 
-    // var color = d3.time.scale()
-    //     .domain([new Date(1962, 0, 1), new Date(2006, 0, 1)])
-    //     .range(["black", "steelblue"])
-    //     .interpolate(d3.interpolateLab);
-
     var projection = d3.geo.mercator()
       .center(self.coordinates)
       .scale((1 << 20) / 2 / Math.PI)
@@ -150,13 +137,6 @@ App.load = function () {
 
     var path = self.path = d3.geo.path()
       .projection(projection);
-
-/****** // Tooltip
-    var tip = d3.tip()
-      .attr('class', 'map-tooltip')
-      .html(createTooltip);
-//  uncomment line 83 to call this function
-*************/
 
 	self.svg = d3.select('#map').append('div').classed('svg-container', true)
         .append('svg')
